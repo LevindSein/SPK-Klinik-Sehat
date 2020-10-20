@@ -45,7 +45,7 @@
                                     <i class="fas fa-edit fa-sm"></i></a>
                                 &nbsp;
                                 <a
-                                    href="{{url('#')}}">
+                                    href="{{url('user/reset',[$d->id])}}">
                                     <i class="fas fa-key"></i></a>
                                 &nbsp;
                                 <a

@@ -26,11 +26,28 @@ class UserController extends Controller
         $data->save();
 
         Nexmo::message()->send([
-            'to'   => '6288214069068',
+            'to'   => '6287838840774',
             'from' => '1913',
             'text' => 'Hai, Coders. Klinik Sehat informasikan Password untuk '.$nama.' adalah >> '.$password.' <<'
         ]);
         return redirect()->route('users')->with('success','Data Ditambah, Cek SMS');
+    }
+
+    public function reset($id){
+        $random = str_shuffle('abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ123456789');
+        $password = substr($random, 0, 7);
+
+        $data = User::find($id);
+        $nama = $data->username;
+        $data->password = md5($password);
+        $data->save();
+
+        Nexmo::message()->send([
+            'to'   => '6287838840774',
+            'from' => '1913',
+            'text' => 'Hai, Coders. Klinik Sehat informasikan Password baru untuk '.$nama.' adalah >> '.$password.' <<'
+        ]);
+        return redirect()->route('users')->with('success','Password direset, Cek SMS');
     }
 
     public function delete($id){

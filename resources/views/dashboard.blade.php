@@ -1,4 +1,5 @@
 <!-- Begin Page Content -->
+<title>Dashboard</title>
 <div class="container-fluid">
 
 <!-- Page Heading -->

@@ -38,10 +38,12 @@ Route::get('electre','ElectreController@index');
 
 //Laporan
 Route::get('laporan','LaporanController@index');
+Route::get('laporan/print/{bln}','LaporanController@print');
 
 //User
 Route::get('users','UserController@index')->name('users');
 Route::post('user/add','UserController@add');
+Route::get('user/reset/{id}','UserController@reset');
 Route::get('user/delete/{id}','UserController@delete');
 
 //Kategori

@@ -14,8 +14,6 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>SPK Klinik Sehat</title>
-
         <!-- Custom fonts for this template -->
         <link
             href="{{asset('vendor/fontawesome-free/css/all.min.css')}}"
