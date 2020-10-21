@@ -35,7 +35,7 @@ Route::get('kriteria/update/{id}','KriteriaController@update');
 Route::post('kriteria/store/{id}','KriteriaController@store');
 
 //Nilai
-Route::get('nilai','NilaiController@index');
+Route::get('nilai','NilaiController@index')->name('nilai');
 Route::get('nilai/update/{id}','NilaiController@update');
 Route::post('nilai/store/{id}','NilaiController@store');
 
