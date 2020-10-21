@@ -12,7 +12,7 @@ use App\Alternatif;
 class NilaiController extends Controller
 {
     public function index(Request $request){
-        // $this->updNilai();
+        $this->updNilai();
         $dataset = Nilai::join();
         $kategori = Kategori::all();
         $name = "Pilih Kategori :";

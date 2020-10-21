@@ -77,26 +77,15 @@
       </div>
       <div class="card-body">
         <p>
-          Dalam penggunaan Sistem Pendukung Keputusan (SPK) metode electre ini, ada beberapa informasi yang perlu diketahui pengguna, yaitu :<br>
+          Dalam penggunaan Sistem Pendukung Keputusan (SPK) metode electre ini, berikut informasi yang perlu diketahui pengguna, yaitu :<br>
           <br>
-          <b>1. Bobot Kriteria (Keuntungan):</b><br>
+          <b>Bobot Kriteria :</b><br>
           &emsp;1 = Sangat Tidak Penting<br>
           &emsp;2 = Tidak Penting<br>
           &emsp;3 = Cukup Penting<br>
           &emsp;4 = Penting<br>
           &emsp;5 = Sangat Penting<br>
           Bobot Kriteria terdapat pada data kriteria <a href="{{url('kriteria')}}">disini</a>.<br><br>
-
-          <b>2. Garansi :</b><br>
-          &emsp;0 = Tidak Ada<br>
-          &emsp;1 = Ada<br>
-          Garansi terdapat pada penambahan data nilai <a href="{{url('nilai')}}">disini</a>.<br><br>
-          
-          <b>3. Efek Samping (Keuntungan) :</b><br>
-          &emsp;1 = Berat<br>
-          &emsp;2 = Sedang<br>
-          &emsp;3 = Ringan<br>
-          Efek Samping terdapat pada penambahan data nilai <a href="{{url('nilai')}}">disini</a>.<br><br>
         </p>
       </div>
     </div>

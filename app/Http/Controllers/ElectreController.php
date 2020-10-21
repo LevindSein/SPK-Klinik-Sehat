@@ -11,17 +11,36 @@ use App\Kategori;
 class ElectreController extends Controller
 {
     public function index(Request $request){
-        $data = "";
         $kategori = Kategori::all();
-        $name = "Pilih Kategori :";
+        $pilihan = "Pilih Kategori :";
         $value = 0;
         if($request->get('id') == 1){
             $id = $request->get('kategori');
-            $name = Kategori::name($id);
             $data = Kategori::find($id);
             $data = $data->nama;
             $value = 1;
+
+            $electre = Nilai::electre($id);
+            $nilaiAwal = $electre[0];
+            $matriksNormalisasi = $electre[1];
+            $bobotNormalisasi = $electre[2];
+
+            return view('electre.index',
+            [
+                'data'=>$data,
+                'kategori'=>$kategori,
+                'value'=>$value,
+                'nilaiAwal'=>$nilaiAwal,
+                'matriksNormalisasi'=>$matriksNormalisasi,
+                'bobotNormalisasi'=>$bobotNormalisasi,
+            ]);
+
         }
-        return view('electre.index',['data'=>$data,'kategori'=>$kategori,'name'=>$name,'value'=>$value]);
+        // return view('electre.index',
+        // [
+        //     'kategori'=>$kategori,
+        //     'pilihan'=>$pilihan,
+        //     'value'=>$value
+        // ]);
     }
 }
