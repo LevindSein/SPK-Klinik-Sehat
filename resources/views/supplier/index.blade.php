@@ -29,6 +29,8 @@
                     <thead class="table-bordered">
                         <tr>
                             <th style="background-color:rgba(255, 212, 71, 0.2);">Supplier Obat</th>
+                            <th style="background-color:rgba(255, 212, 71, 0.2);">Alamat</th>
+                            <th style="background-color:rgba(255, 212, 71, 0.2);">No.hp</th>
                             <th style="background-color:rgba(255, 212, 71, 0.2);">Banyak Obat</th>
                             <th style="background-color:rgba(255, 212, 71, 0.2);">Action</th>
                         </tr>
@@ -41,10 +43,12 @@
                         ?>
                         <tr>
                             <td class="text-center">{{$d->nama}}</td>
+                            <td class="text-center">{{$d->alamat}}</td>
+                            <td class="text-center">{{$d->no_hp}}</td>
                             <td class="text-center">{{$jumlah}}</td>
                             <td class="text-center">
                                 <a
-                                    href="{{url('#')}}">
+                                    href="{{url('supplier/update',[$d->id])}}">
                                     <i class="fas fa-edit fa-sm"></i></a>
                                 @if($jumlah == 0)
                                 &nbsp;
@@ -86,9 +90,29 @@
                             type="text"
                             style="text-transform: capitalize;"
                             name="nama"
+                            maxlength="20"
                             class="form-control form-control-user"
                             id="nama"
-                            placeholder="Nama Farmasi">
+                            placeholder="Nama Farmasi"><br>
+                        Alamat
+                        <input
+                            required="required"
+                            type="text"
+                            style="text-transform: capitalize;"
+                            name="alamat"
+                            maxlength="25"
+                            class="form-control form-control-user"
+                            id="alamat"
+                            placeholder="Tangerang, Banten"><br>
+                        No.hp
+                        <input
+                            required="required"
+                            type="tel"
+                            name="no_hp"
+                            maxlength="13"
+                            class="form-control form-control-user"
+                            id="no_hp"
+                            placeholder="0878xxxx">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -118,5 +142,14 @@
             "scrollX": true,
         });
     });
+</script>
+<script>
+$('[type=tel]').on('change', function(e) {
+  $(e.target).val($(e.target).val().replace(/[^\d\.]/g, ''))
+})
+$('[type=tel]').on('keypress', function(e) {
+  keys = ['0','1','2','3','4','5','6','7','8','9','.']
+  return keys.indexOf(event.key) > -1
+})
 </script>
 @endsection

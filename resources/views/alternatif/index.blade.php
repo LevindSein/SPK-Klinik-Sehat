@@ -47,7 +47,7 @@
                             <td class="text-center">{{$d->satuan}}</td>
                             <td class="text-center">
                                 <a
-                                    href="{{url('#')}}">
+                                    href="{{url('alternatif/update',[$d->id])}}">
                                     <i class="fas fa-edit fa-sm"></i></a>
                                 &nbsp;
                                 <a

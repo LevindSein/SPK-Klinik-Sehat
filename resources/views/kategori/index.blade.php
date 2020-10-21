@@ -44,7 +44,7 @@
                             <td class="text-center">{{$jumlah}}</td>
                             <td class="text-center">
                                 <a
-                                    href="{{url('#')}}">
+                                    href="{{url('kategori/update',[$d->id])}}">
                                     <i class="fas fa-edit fa-sm"></i></a>
                                 @if($jumlah == 0)
                                 &nbsp;

@@ -26,7 +26,7 @@ class UserController extends Controller
         $data->save();
 
         Nexmo::message()->send([
-            'to'   => '6287838840774',
+            'to'   => '6288214069068',
             'from' => '1913',
             'text' => 'Hai, Coders. Klinik Sehat informasikan Password untuk '.$nama.' adalah >> '.$password.' <<'
         ]);
@@ -43,7 +43,7 @@ class UserController extends Controller
         $data->save();
 
         Nexmo::message()->send([
-            'to'   => '6287838840774',
+            'to'   => '6288214069068',
             'from' => '1913',
             'text' => 'Hai, Coders. Klinik Sehat informasikan Password baru untuk '.$nama.' adalah >> '.$password.' <<'
         ]);
@@ -52,7 +52,35 @@ class UserController extends Controller
 
     public function delete($id){
         $user = User::find($id);
+        $nama = $user->username;
         $user->delete();
+
+        Nexmo::message()->send([
+            'to'   => '6288214069068',
+            'from' => '1913',
+            'text' => 'Hai, Coders. Klinik Sehat informasikan user '.$nama.' dihapus dari sistem'
+        ]);
         return redirect()->route('users')->with('success','User Dihapus');
+    }
+
+    public function update($id){
+        $dataset = User::find($id);
+        return view('user.update',['dataset'=>$dataset]);
+    }
+
+    public function store(Request $request, $id){
+        $nama = $request->get('nama');
+        
+        $user = User::find($id);
+        $namalama = $user->username;
+        $user->username = $nama;
+        $user->save();
+
+        Nexmo::message()->send([
+            'to'   => '6288214069068',
+            'from' => '1913',
+            'text' => 'Hai, Coders. Klinik Sehat informasikan user update untuk '.$namalama.' menjadi >> '.$nama.' <<'
+        ]);
+        return redirect()->route('users')->with('success','User Diupdate');
     }
 }

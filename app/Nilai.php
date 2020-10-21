@@ -27,6 +27,7 @@ class Nilai extends Model
         return DB::table('nilai')
         ->leftJoin('alternatif','nilai.id_alternatif','=','alternatif.id')
         ->select(
+            'nilai.id_alternatif as id',
             'alternatif.nama',
             'alternatif.satuan',
             'alternatif.supplier',

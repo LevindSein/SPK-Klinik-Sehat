@@ -64,7 +64,7 @@
                             <td class="text-center">{{$d->harga}}</td>
                             <td class="text-center">
                                 <a
-                                    href="{{url('#')}}">
+                                    href="{{url('nilai/update',[$d->id])}}">
                                     <i class="fas fa-edit fa-sm"></i></a>
                             </td>
                         </tr>

@@ -23,4 +23,15 @@ class Alternatif extends Model
     public static function kode($str){
         return strtoupper(substr($str, 0, 2));
     }
+
+    public static function mean($kategori){
+        $mean = DB::table('alternatif')->where('kategori',$kategori)->get();
+        $count = count($mean);
+        $total = 0;
+        foreach($mean as $m){
+            $total = $total + $m->harga;
+        }
+        $mean = $total / $count;
+        return round($mean);
+    }
 }

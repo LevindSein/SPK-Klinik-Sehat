@@ -28,4 +28,17 @@ class KategoriController extends Controller
         $kategori->delete();
         return redirect()->route('kategori')->with('success','Kategori Dihapus');
     }
+
+    public function update($id){
+        $dataset = Kategori::find($id);
+        return view('kategori.update',['dataset'=>$dataset]);
+    }
+
+    public function store(Request $request, $id){
+        $nama = $request->get('nama');
+        $kategori = Kategori::find($id);
+        $kategori->nama = $nama;
+        $kategori->save();
+        return redirect()->route('kategori')->with('success','Kategori Diupdate');
+    }
 }

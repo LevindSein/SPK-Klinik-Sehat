@@ -41,7 +41,7 @@
                             <td class="text-center">{{$d->role}}</td>
                             <td class="text-center">
                                 <a
-                                    href="{{url('#')}}">
+                                    href="{{url('user/update',[$d->id])}}">
                                     <i class="fas fa-edit fa-sm"></i></a>
                                 &nbsp;
                                 <a

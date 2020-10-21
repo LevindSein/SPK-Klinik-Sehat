@@ -19,12 +19,24 @@ class AlternatifController extends Controller
         return view('alternatif.index',['dataset'=>$dataset,'kategori'=>$kategori,'supplier'=>$supplier]);
     }
 
+    // public function updateKode(){
+    //     $data = Alternatif::all();
+    //     foreach($data as $d){
+    //         $alternatif = ucfirst($d->nama);
+    //         $kode = Alternatif::kode($alternatif).mt_rand(10000, 99999);
+
+    //         $upd = Alternatif::find($d->id);
+    //         $upd->kode = $kode;
+    //         $upd->save();
+    //     }
+    // }
+
     public function add(Request $request){
         $alternatif = ucfirst($request->get('alternatif'));
         $kategori = $request->get('kategori');
         $supplier = $request->get('supplier');
         $satuan = $request->get('satuan');
-        $kode = Alternatif::kode($alternatif).mt_rand(10000, 99999);;
+        $kode = Alternatif::kode($alternatif).mt_rand(10000, 99999);
 
         $data = new Alternatif;
         $data->kode = $kode;
@@ -42,5 +54,29 @@ class AlternatifController extends Controller
         $alternatif = Alternatif::find($id);
         $alternatif->delete();
         return redirect()->route('alternatif')->with('success','Data Dihapus');
+    }
+
+    public function update($id){
+        $dataset = Alternatif::find($id);
+        $kategori = Kategori::all();
+        $supplier = Supplier::all();
+        return view('alternatif.update',['dataset'=>$dataset,'kategori'=>$kategori,'supplier'=>$supplier]);
+    }
+
+    public function store(Request $request, $id){
+        $alternatif = ucfirst($request->get('nama'));
+        $kategori = $request->get('kategori');
+        $supplier = $request->get('supplier');
+        $satuan = $request->get('satuan');
+        $kode = Alternatif::kode($alternatif).mt_rand(10000, 99999);
+
+        $data = Alternatif::find($id);
+        $data->kode = $kode;
+        $data->nama = $alternatif;
+        $data->kategori = $kategori;
+        $data->supplier = $supplier;
+        $data->satuan = $satuan;
+        $data->save();
+        return redirect()->route('alternatif')->with('success','Data Ditambah');
     }
 }
