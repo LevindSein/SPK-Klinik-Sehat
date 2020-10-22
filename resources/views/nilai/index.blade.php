@@ -1,4 +1,21 @@
-@extends('layout.master')
+<?php
+$role = Session::get('role');
+?>
+
+@php
+    $view = '';
+    if ($role == 'master') {
+        $view = 'layout.master';
+    } 
+    else if($role == 'admin'){
+        $view = 'layout.admin';
+    }
+    else{
+        $view = 'layout.dokter';
+    }
+@endphp
+
+@extends($view)
 @section('content')
 <!-- Begin Page Content -->
 <title>Data Nilai</title>

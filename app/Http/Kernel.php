@@ -61,6 +61,14 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        //middleware baru
+        'ceklogin' => \App\Http\Middleware\CekLogin::class,
+        'cekdokter' => \App\Http\Middleware\CekDokter::class,
+        'cekmaster' => \App\Http\Middleware\CekMaster::class,
+        'cekadmin' => \App\Http\Middleware\CekAdmin::class,
+        'masterdokter' => \App\Http\Middleware\MasterDokter::class,
+        'masteradmin' => \App\Http\Middleware\MasterAdmin::class,
+        'masteradmindokter' => \App\Http\Middleware\MasterAdminDokter::class,
     ];
 
     /**

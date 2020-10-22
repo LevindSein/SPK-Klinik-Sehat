@@ -13,7 +13,7 @@ class NilaiController extends Controller
 {
     public function index(Request $request){
         // $this->updNilai();
-        $this->random();
+        // $this->random();
         $dataset = Nilai::join();
         $kategori = Kategori::all();
         $name = "Pilih Kategori :";

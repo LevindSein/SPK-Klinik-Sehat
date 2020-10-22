@@ -1,4 +1,7 @@
-@extends('layout.master')
+<?php
+$role = Session::get('role');
+?>
+@extends($role == 'master' ? 'layout.master' : 'layout.dokter')
 @section('content')
 <!-- Begin Page Content -->
 <title>Keputusan Metode Electre</title>

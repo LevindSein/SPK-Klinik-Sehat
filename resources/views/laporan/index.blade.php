@@ -18,8 +18,10 @@ function tgl_indo($tanggal){
 	return $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
 }
 ?>
-
-@extends('layout.master')
+<?php
+$role = Session::get('role');
+?>
+@extends($role == 'master' ? 'layout.master' : 'layout.admin')
 @section('content')
 <!-- Begin Page Content -->
 <title>Cetak Laporan</title>
