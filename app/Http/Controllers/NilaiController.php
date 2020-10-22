@@ -12,7 +12,8 @@ use App\Alternatif;
 class NilaiController extends Controller
 {
     public function index(Request $request){
-        $this->updNilai();
+        // $this->updNilai();
+        $this->random();
         $dataset = Nilai::join();
         $kategori = Kategori::all();
         $name = "Pilih Kategori :";
@@ -246,6 +247,19 @@ class NilaiController extends Controller
                 'garansi'=>$garansi,
                 'merk'=>$merk,
                 'harga'=>$harga
+            ]);
+        }
+    }
+
+    public function random(){
+        $dataset = Alternatif::all();
+        foreach($dataset as $d){
+            Nilai::where('id_alternatif',$d->id)->update([
+                'khasiat'=>rand(1,5),
+                'efek'=>rand(1,5),
+                'garansi'=>rand(1,5),
+                'merk'=>rand(1,5),
+                'harga'=>rand(1,5)
             ]);
         }
     }

@@ -27,6 +27,12 @@ class ElectreController extends Controller
             $cIndex = $electre[3];
             $dIndex = $electre[4];
             $cMatriks = $electre[5];
+            $cThreshold = $electre[6];
+            $dMatriks = $electre[7];
+            $dThreshold = $electre[8];
+            $agregat = $electre[9];
+            $id = $electre[10];
+            $dominasi = $electre[11];
 
             return view('electre.index',
             [
@@ -39,6 +45,12 @@ class ElectreController extends Controller
                 'cIndex'=>$cIndex,
                 'dIndex'=>$dIndex,
                 'cMatriks'=>$cMatriks,
+                'cThreshold'=>$cThreshold,
+                'dMatriks'=>$dMatriks,
+                'dThreshold'=>$dThreshold,
+                'agregat'=>$agregat,
+                'id'=>$id,
+                'dominasi'=>$dominasi
             ]);
 
         }

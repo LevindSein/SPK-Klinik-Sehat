@@ -65,6 +65,7 @@ class Nilai extends Model
         ->where('alternatif.kategori',$id)
         ->select(
             'alternatif.nama',
+            'nilai.id_alternatif as alt',
             'nilai.khasiat',
             'nilai.efek',
             'nilai.garansi',
@@ -168,29 +169,133 @@ class Nilai extends Model
             }
         }
 
-        //Matriks Concordance dari Himpunan Index
+        //Matriks Concordance dan Discordance dari Himpunan Index
         $w = DB::table('kriteria')->select('bobot')->get();
         $kriteria[0] = $w[0]->bobot;
         $kriteria[1] = $w[1]->bobot;
         $kriteria[2] = $w[2]->bobot;
         $kriteria[3] = $w[3]->bobot;
         $kriteria[4] = $w[4]->bobot;
+
+
         $cMatriks = array();
+        $dMatriks = array();
         for($i=0; $i<count($bobot); $i++){
             for($j=0; $j<count($bobot); $j++){
                 if($i != $j){
-                    $explode = explode(",",$concordanceIndex[$i][$j]);
-
-                    $totalC = 0;
-                    for($k=0; $k<count($explode); $k++){
-                        $bobotKriteria = $kriteria[$k];
-                        $totalC = $totalC + $bobotKriteria;    
+                    if($concordanceIndex[$i][$j] != " "){
+                        $explode = explode(",",$concordanceIndex[$i][$j]);
+                        $totalC = 0;
+                        for($k=0; $k<count($explode); $k++){
+                            $bobotKriteria = $kriteria[$explode[$k]];
+                            $totalC = $totalC + $bobotKriteria;
+                        }
+                        $cMatriks[$i][$j] = $totalC;
                     }
-                    $cMatriks[$i][$j] = $totalC;
-                }        
+                    else{
+                        $cMatriks[$i][$j] = 0;
+                    }
+
+                    if($discordanceIndex[$i][$j] != " "){
+                        $explode = explode(",",$discordanceIndex[$i][$j]);
+                        $totalD = 0;
+                        $y = 0;
+                        $pembilang = array();
+                        for($k=0; $k<count($explode); $k++){
+                            $pembilang[$y] = abs($bobot[$i][$explode[$k]] - $bobot[$j][$explode[$k]]);
+                            $y++;
+                        }
+                        $y = 0;
+                        $penyebut = array();
+                        for($k=0; $k<5; $k++){
+                            $penyebut[$y] = abs($bobot[$i][$k] - $bobot[$j][$k]);
+                            $y++;
+                        }
+                        $atas = max($pembilang);
+                        $bawah = max($penyebut);
+                        $dMatriks[$i][$j] = $atas / $bawah;
+                    }
+                    else{
+                        $dMatriks[$i][$j] = 0;
+                    }
+                }
             }
         }
 
-        return array($nilaiAwal,$normalisasi,$bobot,$concordanceIndex,$discordanceIndex,$cMatriks);
+        //Dominan Concordance dari Martriks Concordance
+        $penyebut = (count($cMatriks) * count($cMatriks)) - count($cMatriks);
+        $pembilang = 0;
+        for($i=0; $i<count($cMatriks); $i++){
+            for($j=0; $j<count($cMatriks); $j++){
+                if($i != $j){
+                    $pembilang = $pembilang + $cMatriks[$i][$j];
+                }
+            }
+        }
+        $meanConcordance = $pembilang / $penyebut;
+        $cThreshold = array();
+        for($i=0; $i<count($cMatriks); $i++){
+            for($j=0; $j<count($cMatriks); $j++){
+                if($i != $j){
+                    if($cMatriks[$i][$j] >= $meanConcordance){
+                        $cThreshold[$i][$j] = 1; 
+                    }
+                    else{
+                        $cThreshold[$i][$j] = 0;
+                    }
+                }
+            }
+        }
+
+        //Dominan Discordance dari Martriks Discordance
+        $penyebut = (count($dMatriks) * count($dMatriks)) - count($dMatriks);
+        $pembilang = 0;
+        for($i=0; $i<count($dMatriks); $i++){
+            for($j=0; $j<count($dMatriks); $j++){
+                if($i != $j){
+                    $pembilang = $pembilang + $dMatriks[$i][$j];
+                }
+            }
+        }
+        $meanDiscordance = $pembilang / $penyebut;
+        $dThreshold = array();
+        for($i=0; $i<count($dMatriks); $i++){
+            for($j=0; $j<count($dMatriks); $j++){
+                if($i != $j){
+                    if($dMatriks[$i][$j] >= $meanDiscordance){
+                        $dThreshold[$i][$j] = 1; 
+                    }
+                    else{
+                        $dThreshold[$i][$j] = 0;
+                    }
+                }
+            }
+        }
+
+        //Kesimpulan Dominasi
+        $dominasi = array();
+        for($i=0; $i<count($dataset); $i++){
+            for($j=0; $j<count($dataset); $j++){
+                if($i != $j){ 
+                    $dominasi[$i][$j] = $cThreshold[$i][$j] * $dThreshold[$i][$j];
+                }
+            }
+        }
+
+        //Agregat
+        $agregat = array();
+        $id = array();
+        for($i=0; $i<count($dataset); $i++){
+            $total = 0;
+            for($j=0; $j<count($dataset); $j++){
+                if($i != $j){ 
+                    $total = $total + ($cThreshold[$i][$j] * $dThreshold[$i][$j]);
+                }
+            }
+            $agregat[$i] = $total;
+            $id[$i] = $dataset[$i]->alt;
+        }
+
+        return array($nilaiAwal,$normalisasi,$bobot,$concordanceIndex,$discordanceIndex,$cMatriks,$cThreshold,$dMatriks,$dThreshold,$agregat,$id,$dominasi);
     }
 }
