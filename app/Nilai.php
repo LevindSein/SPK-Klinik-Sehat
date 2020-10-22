@@ -124,6 +124,73 @@ class Nilai extends Model
             $bobot[$i][4] = $data[$i][4] * $bobotKriteria[4];
             $bobot[$i][5] = $data[$i][5];
         }
-        return array($nilaiAwal,$normalisasi,$bobot);
+
+        
+        //Concordance Discordance Index
+        $concordanceIndex = array();
+        $discordanceIndex = array();
+        for($i=0; $i<count($bobot); $i++){
+            for($j=0; $j<count($bobot); $j++){
+                if($i == $j){
+                    $concordanceIndex[$i][$j] = NULL;
+                    $discordanceIndex[$i][$j] = NULL;                                                                                                                                                                                            
+                }
+                else{
+                    $himpunanC = array();
+                    $himpunanD = array();
+                    for($k=0; $k<5; $k++){
+                        if($bobot[$i][$k] >= $bobot[$j][$k]){
+                            $himpunanC[$k] = $k;
+                        }
+                        else if($bobot[$i][$k] < $bobot[$j][$k]){
+                            $himpunanD[$k] = $k;
+                        }
+                    }
+                    $concordanceIndex[$i][$j] = $himpunanC;
+                    $discordanceIndex[$i][$j] = $himpunanD;
+                }
+            }
+        }
+        //Jadikan String
+        for($i=0; $i<count($bobot); $i++){
+            for($j=0; $j<count($bobot); $j++){
+                if($i != $j){
+                    $concordanceIndex[$i][$j] = implode(",",$concordanceIndex[$i][$j]);
+                    $discordanceIndex[$i][$j] = implode(",",$discordanceIndex[$i][$j]);
+                    
+                    if($concordanceIndex[$i][$j] == NULL){
+                        $concordanceIndex[$i][$j] = " ";
+                    }
+                    if($discordanceIndex[$i][$j] == NULL){
+                        $discordanceIndex[$i][$j] = " ";
+                    }
+                }
+            }
+        }
+
+        //Matriks Concordance dari Himpunan Index
+        $w = DB::table('kriteria')->select('bobot')->get();
+        $kriteria[0] = $w[0]->bobot;
+        $kriteria[1] = $w[1]->bobot;
+        $kriteria[2] = $w[2]->bobot;
+        $kriteria[3] = $w[3]->bobot;
+        $kriteria[4] = $w[4]->bobot;
+        $cMatriks = array();
+        for($i=0; $i<count($bobot); $i++){
+            for($j=0; $j<count($bobot); $j++){
+                if($i != $j){
+                    $explode = explode(",",$concordanceIndex[$i][$j]);
+
+                    $totalC = 0;
+                    for($k=0; $k<count($explode); $k++){
+                        $bobotKriteria = $kriteria[$k];
+                        $totalC = $totalC + $bobotKriteria;    
+                    }
+                    $cMatriks[$i][$j] = $totalC;
+                }        
+            }
+        }
+
+        return array($nilaiAwal,$normalisasi,$bobot,$concordanceIndex,$discordanceIndex,$cMatriks);
     }
 }

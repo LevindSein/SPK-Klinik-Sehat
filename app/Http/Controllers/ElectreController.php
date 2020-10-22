@@ -12,7 +12,7 @@ class ElectreController extends Controller
 {
     public function index(Request $request){
         $kategori = Kategori::all();
-        $pilihan = "Pilih Kategori :";
+        $data = "Pilih Kategori :";
         $value = 0;
         if($request->get('id') == 1){
             $id = $request->get('kategori');
@@ -24,6 +24,9 @@ class ElectreController extends Controller
             $nilaiAwal = $electre[0];
             $matriksNormalisasi = $electre[1];
             $bobotNormalisasi = $electre[2];
+            $cIndex = $electre[3];
+            $dIndex = $electre[4];
+            $cMatriks = $electre[5];
 
             return view('electre.index',
             [
@@ -33,14 +36,17 @@ class ElectreController extends Controller
                 'nilaiAwal'=>$nilaiAwal,
                 'matriksNormalisasi'=>$matriksNormalisasi,
                 'bobotNormalisasi'=>$bobotNormalisasi,
+                'cIndex'=>$cIndex,
+                'dIndex'=>$dIndex,
+                'cMatriks'=>$cMatriks,
             ]);
 
         }
-        // return view('electre.index',
-        // [
-        //     'kategori'=>$kategori,
-        //     'pilihan'=>$pilihan,
-        //     'value'=>$value
-        // ]);
+        return view('electre.index',
+        [
+            'kategori'=>$kategori,
+            'data'=>$data,
+            'value'=>$value
+        ]);
     }
 }

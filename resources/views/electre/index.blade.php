@@ -187,8 +187,104 @@
                             </table>
                         </div><br>
 
-                        <h6 class="m-0 font-weight-bold text-primary">Himpunan Concordance & Discordance</h6><br><br>
-                        <h6 class="m-0 font-weight-bold text-primary">Matriks Concordance</h6><br><br>
+                        <h6 class="m-0 font-weight-bold text-primary">Himpunan Index Concordance & Discordance</h6><br>
+                        <h8 class="m-0 font-weight-bold text-primary">Index Concordance</h8><br>
+                        <div class="table-responsive ">
+                            <table
+                                class="table"
+                                id="cIndex"
+                                width="100%"
+                                cellspacing="0"
+                                style="font-size:0.75rem;">
+                                <thead class="table-bordered">
+                                    <tr>
+                                        @for($i=0; $i < count($cIndex); $i++)
+                                        <th>Him {{$i+1}}</th>
+                                        @endfor
+                                    </tr>
+                                </thead>
+                                <tbody class="table-bordered">
+                                    @foreach($cIndex as $c)
+                                    <tr>
+                                        @for($i=0; $i < count($c); $i++)
+                                        <td class="text-center">
+                                        @if($c[$i] == NULL)
+                                        &mdash;
+                                        @else
+                                        { {{$c[$i]}} }
+                                        @endif
+                                        </td>
+                                        @endfor
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div><br>
+                        <h8 class="m-0 font-weight-bold text-primary">Index Discordance</h8><br>
+                        <div class="table-responsive ">
+                            <table
+                                class="table"
+                                id="dIndex"
+                                width="100%"
+                                cellspacing="0"
+                                style="font-size:0.75rem;">
+                                <thead class="table-bordered">
+                                    <tr>
+                                        @for($i=0; $i < count($dIndex); $i++)
+                                        <th>Him {{$i+1}}</th>
+                                        @endfor
+                                    </tr>
+                                </thead>
+                                <tbody class="table-bordered">
+                                    @foreach($dIndex as $d)
+                                    <tr>
+                                        @for($i=0; $i < count($d); $i++)
+                                        <td class="text-center">
+                                        @if($d[$i] == NULL)
+                                        &mdash;
+                                        @else
+                                        { {{$d[$i]}} }
+                                        @endif
+                                        </td>
+                                        @endfor
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div><br>
+
+                        <h6 class="m-0 font-weight-bold text-primary">Matriks Concordance</h6><br>
+                        <div class="table-responsive ">
+                            <table
+                                class="table"
+                                id="cMatriks"
+                                width="100%"
+                                cellspacing="0"
+                                style="font-size:0.75rem;">
+                                <thead class="table-bordered">
+                                    <tr>
+                                        @for($i=0; $i < count($cMatriks); $i++)
+                                        <th>Him {{$i+1}}</th>
+                                        @endfor
+                                    </tr>
+                                </thead>
+                                <tbody class="table-bordered">
+                                    @for($i=0; $i < count($cMatriks); $i++)
+                                    <tr>
+                                        @for($j=0; $j < count($cMatriks); $j++)
+                                        <td class="text-center">
+                                        @if($i == $j)
+                                        &mdash;
+                                        @else
+                                        {{$cMatriks[$i][$j]}}
+                                        @endif
+                                        </td>
+                                        @endfor
+                                    </tr>
+                                    @endfor
+                                </tbody>
+                            </table>
+                        </div><br>
                         <h6 class="m-0 font-weight-bold text-primary">Matriks Discordance</h6><br><br>
                         <h6 class="m-0 font-weight-bold text-primary">Matriks Dominan Concordance</h6><br><br>
                         <h6 class="m-0 font-weight-bold text-primary">Matriks Dominan Discordance</h6><br><br>
@@ -241,6 +337,7 @@
             "paging":false,
             "searching":false,
             "bInfo": false,
+            "order":false,
         });
     });
 </script>
@@ -260,6 +357,7 @@
             "paging":false,
             "searching":false,
             "bInfo": false,
+            "order":false,
         });
     });
 </script>
@@ -279,6 +377,70 @@
             "paging":false,
             "searching":false,
             "bInfo": false,
+            "order":false,
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $(
+            '#cIndex'
+        ).DataTable({
+            "processing": true,
+            "bProcessing": true,
+            "language": {
+                'loadingRecords': '&nbsp;',
+                'processing': '<i class="fas fa-spinner"></i>'
+            },
+            "deferRender": true,
+            "scrollX": true,
+            "paging":false,
+            "searching":false,
+            "bInfo": false,
+            "bSortable": false,
+            "ordering":false,
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $(
+            '#dIndex'
+        ).DataTable({
+            "processing": true,
+            "bProcessing": true,
+            "language": {
+                'loadingRecords': '&nbsp;',
+                'processing': '<i class="fas fa-spinner"></i>'
+            },
+            "deferRender": true,
+            "scrollX": true,
+            "paging":false,
+            "searching":false,
+            "bInfo": false,
+            "bSortable": false,
+            "ordering":false,
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $(
+            '#cMatriks'
+        ).DataTable({
+            "processing": true,
+            "bProcessing": true,
+            "language": {
+                'loadingRecords': '&nbsp;',
+                'processing': '<i class="fas fa-spinner"></i>'
+            },
+            "deferRender": true,
+            "scrollX": true,
+            "paging":false,
+            "searching":false,
+            "bInfo": false,
+            "bSortable": false,
+            "ordering":false,
         });
     });
 </script>
