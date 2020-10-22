@@ -64,7 +64,7 @@ function tgl($tanggal){
             <?php $x = 1; ?>
             @foreach($dataset as $d)
             <tr>
-                <td class="tg-cegc">{{$x}}</td>
+                <td class="tg-cegc">{{$x}}.</td>
                 <td class="tg-g25h" style="text-align:center;">{{tgl($d->tanggal)}}</td>
                 <td class="tg-g25h" style="text-align:left;">{{$d->supplier}}</td>
                 <td class="tg-g25h" style="text-align:left;">{{$d->nama}}</td>

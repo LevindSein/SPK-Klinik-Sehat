@@ -34,4 +34,17 @@ class Alternatif extends Model
         $mean = $total / $count;
         return round($mean);
     }
+
+    public static function laporan($id){
+        return DB::table('alternatif')->where('alternatif.id',$id)
+        ->leftJoin('supplier','alternatif.supplier','=','supplier.id')
+        ->leftJoin('kategori','alternatif.kategori','=','kategori.id')
+        ->select(
+            'alternatif.kode as kode',
+            'alternatif.nama as nama',
+            'alternatif.merk as merk',
+            'kategori.nama as kategori',
+            'supplier.nama as supplier',)
+        ->first();
+    }
 }

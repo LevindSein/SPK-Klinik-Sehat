@@ -45,6 +45,7 @@ Route::get('electre','ElectreController@index');
 //Laporan
 Route::get('laporan','LaporanController@index');
 Route::get('laporan/print/{bln}','LaporanController@print');
+Route::get('laporan/store/{id}','LaporanController@store');
 
 //User
 Route::get('users','UserController@index')->name('users');

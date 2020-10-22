@@ -63,7 +63,7 @@
                                     $obat = DB::table('alternatif')
                                     ->leftJoin('supplier','alternatif.supplier','=','supplier.id')
                                     ->where('alternatif.id',$id[$i])
-                                    ->select('alternatif.nama as alt','supplier.nama as sup')
+                                    ->select('alternatif.id as obatId','alternatif.nama as alt','supplier.nama as sup')
                                     ->first();
                                     ?>
                                     <tr>
@@ -72,7 +72,7 @@
                                         <td class="text-center">{{$obat->sup}}</td>
                                         <td class="text-center">
                                             <a
-                                                href="{{url('#')}}"><i class="fas fa-paper-plane"></i></a>
+                                                href="{{url('laporan/store',[$obat->obatId])}}" target="_blank"><i class="fas fa-paper-plane"></i></a>
                                         </td>
                                     </tr>
                                     @endfor
