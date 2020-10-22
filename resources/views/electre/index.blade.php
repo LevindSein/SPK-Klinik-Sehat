@@ -337,7 +337,7 @@ $role = Session::get('role');
                                         @if($i == $j)
                                         &mdash;
                                         @else
-                                        {{$dMatriks[$i][$j]}}
+                                        {{number_format((float)$dMatriks[$i][$j], 3, '.', '')}}
                                         @endif
                                         </td>
                                         @endfor
@@ -424,7 +424,7 @@ $role = Session::get('role');
                                 class="table"
                                 id="dominasi"
                                 cellspacing="0"
-                                style="font-size:0.75rem;">
+                                style="font-size:0.75rem;width:50%">
                                 <thead class="table-bordered">
                                     <tr>
                                         <th>&nbsp;</th>
@@ -722,11 +722,9 @@ $role = Session::get('role');
             "paging":false,
             "searching":false,
             "bInfo": false,
-            "bSortable": false,
             "ordering":false,
             "fixedColumns":   {
                 "leftColumns": 1,
-                "rightColumns": 1,
             },
         });
     });
